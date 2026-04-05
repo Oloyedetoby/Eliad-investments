@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Eliad Investments & Securities</title>
+<link href="https://fonts.googleapis.com/css2?family=Good+Vibes&family=Playfair+Display:wght@400;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════
+   DESIGN SYSTEM
+═══════════════════════════════════════ */
+:root {
+  --green: #2db542;
+  --green-dark: #1e8a2f;
+  --green-light: #e8f8eb;
+  --navy: #1a1e4f;
+  --navy-deep: #0d1035;
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --off-white: #f7f8f4;
+  --gray-100: #f3f4f0;
+  --gray-200: #e8e9e3;
+  --gray-400: #9a9b94;
+  --gray-600: #5a5b54;
+  --text: #111111;
+  --border: #e2e3dc;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --shadow-lg: 0 16px 60px rgba(0,0,0,0.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--white);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%;
+  height: 72px;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.08); }
+
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+
+/* SVG logo recreation */
+.logo-mark {
+  width: 46px; height: 46px; flex-shrink: 0;
+}
+
+.nav-brand-text { line-height: 1.05; }
+.nav-brand-name {
+  display: block;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 3px;
+  color: var(--navy);
+}
+.nav-brand-sub {
+  display: block;
+  font-size: 0.5rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-top: 1px;
+}
+.nav-tagline-pill {
+  font-family: 'Good Vibes', cursive;
+  font-size: 0.95rem;
+  color: var(--green);
+  margin-left: 4px;
+  letter-spacing: 0;
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 32px; list-style: none;
+}
+.nav-links a {
+  color: var(--gray-600); text-decoration: none;
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  transition: color 0.25s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+  height: 2px; background: var(--green);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+}
+.nav-links a:hover { color: var(--navy); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-cta {
+  padding: 10px 22px;
+  background: var(--green);
+  color: var(--white) !important;
+  border-radius: 6px;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  transition: background 0.25s, transform 0.2s !important;
+}
+.nav-cta:hover { background: var(--green-dark) !important; transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+
+/* ═══════════════════════════════════════
+   HERO SLIDER
+═══════════════════════════════════════ */
+#hero {
+  position: relative;
+  height: 100vh; min-height: 680px;
+  overflow: hidden;
+  margin-top: 72px;
+}
+
+.slides-container { height: 100%; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; align-items: center;
+  opacity: 0; transition: opacity 0.9s ease;
+  padding: 0 5%;
+}
+.slide.active { opacity: 1; z-index: 2; }
+
+/* Slide backgrounds */
+.slide-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transition: transform 8s ease;
+}
+.slide.active .slide-bg { transform: scale(1.04); }
+
+.slide-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.35) 60%, transparent 100%);
+}
+
+.slide-content {
+  position: relative; z-index: 3;
+  max-width: 680px;
+  color: #fff;
+}
+
+.slide-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 20px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s 0.2s, transform 0.6s 0.2s;
+}
+.slide-eyebrow::before {
+  content: ''; width: 28px; height: 2px; background: var(--green);
+}
+.slide.active .slide-eyebrow { opacity: 1; transform: none; }
+
+.slide-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: 800; line-height: 1.05;
+  margin-bottom: 20px;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s 0.35s, transform 0.7s 0.35s;
+}
+.slide.active .slide-title { opacity: 1; transform: none; }
+
+.slide-sub {
+  font-size: 1.05rem; line-height: 1.75; color: rgba(255,255,255,0.82);
+  max-width: 520px; margin-bottom: 36px; font-weight: 400;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s 0.5s, transform 0.7s 0.5s;
+}
+.slide.active .slide-sub { opacity: 1; transform: none; }
+
+.slide-btns {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s 0.65s, transform 0.7s 0.65s;
+}
+.slide.active .slide-btns { opacity: 1; transform: none; }
+
+.btn-hero-primary {
+  padding: 14px 30px;
+  background: var(--green); color: #fff;
+  border: none; border-radius: 6px;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.82rem; letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer; text-decoration: none;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  box-shadow: 0 0 0 0 rgba(45,181,66,0);
+}
+.btn-hero-primary:hover {
+  background: var(--green-dark); transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(45,181,66,0.35);
+}
+
+.btn-hero-outline {
+  padding: 14px 30px;
+  background: rgba(255,255,255,0.1); color: #fff;
+  border: 1px solid rgba(255,255,255,0.4); border-radius: 6px;
+  font-family: 'Syne', sans-serif; font-weight: 600;
+  font-size: 0.82rem; letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer; text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: background 0.25s, border-color 0.25s;
+}
+.btn-hero-outline:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.7); }
+
+/* Slide indicators */
+.slide-indicators {
+  position: absolute; bottom: 36px; left: 5%; z-index: 10;
+  display: flex; gap: 10px; align-items: center;
+}
+.indicator {
+  width: 28px; height: 3px; border-radius: 2px;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer; transition: background 0.3s, width 0.3s;
+}
+.indicator.active { background: var(--green); width: 52px; }
+
+/* Slide counter */
+.slide-counter {
+  position: absolute; bottom: 40px; right: 5%; z-index: 10;
+  font-size: 0.75rem; color: rgba(255,255,255,0.5); letter-spacing: 2px;
+}
+.slide-counter span { color: var(--green); font-weight: 700; font-size: 1rem; }
+
+/* ═══════════════════════════════════════
+   WAITLIST MODAL / POPUP
+═══════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,10,10,0.6);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--white);
+  border-radius: 20px;
+  width: 100%; max-width: 560px;
+  max-height: 92vh; overflow-y: auto;
+  padding: 48px 44px;
+  position: relative;
+  transform: scale(0.94) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.2);
+}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gray-100); border: none;
+  cursor: pointer; font-size: 1rem; color: var(--gray-600);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: var(--gray-200); }
+
+.modal-tag {
+  display: inline-block;
+  padding: 4px 12px; border-radius: 20px;
+  background: var(--green-light); color: var(--green-dark);
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem; font-weight: 800; line-height: 1.15;
+  color: var(--navy); margin-bottom: 8px;
+}
+
+.modal-sub {
+  font-size: 0.88rem; color: var(--gray-600); line-height: 1.65;
+  margin-bottom: 28px;
+}
+
+.form-field { margin-bottom: 16px; }
+.form-field label {
+  display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--gray-600); margin-bottom: 7px;
+}
+.form-field input, .form-field select {
+  width: 100%; padding: 12px 16px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Syne', sans-serif; font-size: 0.9rem;
+  color: var(--text); background: var(--white);
+  transition: border-color 0.25s, box-shadow 0.25s; outline: none;
+}
+.form-field input:focus, .form-field select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(45,181,66,0.12);
+}
+.form-field select option { color: var(--text); }
+
+.radio-group { display: flex; flex-direction: column; gap: 9px; margin-top: 4px; }
+.radio-opt {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  font-size: 0.87rem;
+}
+.radio-opt:hover { border-color: var(--green); background: var(--green-light); }
+.radio-opt input[type="radio"] { accent-color: var(--green); width: 16px; height: 16px; }
+.radio-opt.selected { border-color: var(--green); background: var(--green-light); }
+
+.btn-submit-waitlist {
+  width: 100%; padding: 16px;
+  background: var(--green); color: #fff; border: none; border-radius: 8px;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.9rem; letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer; margin-top: 20px;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  box-shadow: 0 4px 20px rgba(45,181,66,0.25);
+}
+.btn-submit-waitlist:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(45,181,66,0.35); }
+
+.form-privacy { font-size: 0.72rem; color: var(--gray-400); text-align: center; margin-top: 12px; }
+
+/* Success state */
+.modal-success {
+  display: none; text-align: center; padding: 20px 0;
+}
+.success-icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 2rem;
+}
+.success-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+.success-sub { font-size: 0.9rem; color: var(--gray-600); line-height: 1.65; }
+
+/* ═══════════════════════════════════════
+   EARLY ACCESS BANNER (right after hero)
+═══════════════════════════════════════ */
+#early-access {
+  background: var(--navy);
+  padding: 80px 5%;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+#early-access::before {
+  content: '';
+  position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(45,181,66,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.early-tag {
+  display: inline-block;
+  padding: 5px 16px; border-radius: 20px;
+  background: rgba(45,181,66,0.15); color: var(--green);
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.early-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+  color: var(--white); line-height: 1.15; margin-bottom: 14px;
+}
+.early-sub {
+  font-size: 1rem; color: rgba(255,255,255,0.65); line-height: 1.75;
+  max-width: 520px; margin: 0 auto 32px; font-weight: 400;
+}
+.btn-waitlist-main {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 36px;
+  background: var(--green); color: #fff; border: none; border-radius: 8px;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.9rem; letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer; text-decoration: none;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  box-shadow: 0 8px 30px rgba(45,181,66,0.3);
+}
+.btn-waitlist-main:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 16px 40px rgba(45,181,66,0.4); }
+.btn-waitlist-main svg { width: 18px; height: 18px; }
+
+.early-numbers {
+  display: flex; justify-content: center; gap: 60px;
+  margin-top: 56px; flex-wrap: wrap;
+}
+.early-num { text-align: center; }
+.early-num-val {
+  font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 800;
+  color: var(--green); line-height: 1;
+}
+.early-num-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+
+/* ═══════════════════════════════════════
+   SECTION COMMONS
+═══════════════════════════════════════ */
+section { padding: 96px 5%; }
+
+.sec-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 16px;
+}
+.sec-tag::before { content: ''; width: 20px; height: 2px; background: var(--green); }
+
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+  color: var(--navy); line-height: 1.15; margin-bottom: 16px;
+}
+.sec-sub {
+  font-size: 1rem; color: var(--gray-600); line-height: 1.8; font-weight: 400;
+  max-width: 560px;
+}
+.accent { color: var(--green); }
+
+/* ═══════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════ */
+#about { background: var(--off-white); }
+
+.about-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  align-items: center; margin-top: 60px;
+}
+
+.about-img-wrap {
+  position: relative;
+}
+.about-img {
+  width: 100%; border-radius: 16px;
+  object-fit: cover; height: 440px;
+  display: block;
+}
+.about-img-fallback {
+  width: 100%; height: 440px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--navy) 0%, #2a3080 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Good Vibes', cursive; font-size: 3rem; color: rgba(255,255,255,0.2);
+}
+.about-badge {
+  position: absolute; bottom: -24px; right: -24px;
+  background: var(--green); color: #fff;
+  padding: 22px 28px; border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(45,181,66,0.35);
+}
+.about-badge-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 800; line-height: 1; }
+.about-badge-label { font-size: 0.68rem; letter-spacing: 1.5px; opacity: 0.85; text-transform: uppercase; margin-top: 4px; }
+
+.about-text { padding-bottom: 20px; }
+.about-text p { color: var(--gray-600); line-height: 1.85; margin-bottom: 18px; font-size: 0.95rem; }
+
+.about-commits { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+.commit-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.9rem; color: var(--gray-600);
+}
+.commit-dot {
+  width: 20px; height: 20px; flex-shrink: 0;
+  background: var(--green-light); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px;
+}
+.commit-dot::after {
+  content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+}
+
+/* ═══════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════ */
+#services { background: var(--white); }
+
+.services-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: end; margin-bottom: 56px;
+}
+
+.services-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+}
+
+.service-card {
+  background: var(--white);
+  border: 1.5px solid var(--border); border-radius: 16px;
+  padding: 36px 32px;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  position: relative; overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--green), transparent);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(45,181,66,0.3);
+}
+.service-card:hover::before { transform: scaleX(1); }
+
+.service-icon-wrap {
+  width: 52px; height: 52px;
+  background: var(--green-light); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 22px;
+}
+.service-num {
+  position: absolute; top: 28px; right: 28px;
+  font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800;
+  color: var(--gray-100); line-height: 1;
+}
+.service-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.service-return {
+  display: inline-block; padding: 3px 10px;
+  background: var(--green-light); color: var(--green-dark);
+  border-radius: 4px; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.service-desc { font-size: 0.87rem; color: var(--gray-600); line-height: 1.75; }
+
+/* ═══════════════════════════════════════
+   RETURNS CALCULATOR
+═══════════════════════════════════════ */
+#calculator { background: var(--off-white); }
+
+.calc-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: start; margin-top: 56px;
+}
+
+.calc-box {
+  background: var(--white);
+  border: 1.5px solid var(--border); border-radius: 20px;
+  padding: 44px;
+  box-shadow: var(--shadow);
+}
+
+.calc-field { margin-bottom: 24px; }
+.calc-field label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-600); margin-bottom: 10px; }
+
+.calc-input-wrap { position: relative; }
+.calc-currency {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  font-weight: 700; color: var(--gray-400); font-size: 0.9rem;
+}
+.calc-input-wrap input {
+  width: 100%; padding: 13px 16px 13px 32px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text);
+  outline: none; transition: border-color 0.25s;
+}
+.calc-input-wrap input:focus { border-color: var(--green); }
+
+.calc-slider input[type="range"] {
+  -webkit-appearance: none; width: 100%; height: 4px;
+  background: var(--gray-200); border-radius: 2px; outline: none; cursor: pointer;
+}
+.calc-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px;
+  background: var(--green); border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(45,181,66,0.35);
+}
+.calc-slider-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--gray-400); margin-top: 8px; }
+
+.plan-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.plan-tab {
+  padding: 8px 16px; border-radius: 6px;
+  border: 1.5px solid var(--border); background: var(--white);
+  font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; color: var(--gray-600);
+}
+.plan-tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+.calc-results {
+  background: var(--navy); border-radius: 16px; padding: 36px;
+  color: #fff; margin-top: 0;
+  position: sticky; top: 100px;
+}
+.calc-res-title { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+.calc-res-item { margin-bottom: 28px; }
+.calc-res-label { font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+.calc-res-value { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 800; color: var(--white); line-height: 1; }
+.calc-res-value.green { color: var(--green); }
+.calc-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 24px 0; }
+.calc-disclaimer { font-size: 0.72rem; color: rgba(255,255,255,0.35); line-height: 1.6; margin-top: 20px; }
+
+/* ═══════════════════════════════════════
+   TEAM
+═══════════════════════════════════════ */
+#team { background: var(--white); }
+
+.team-header-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 20px; }
+
+.team-lead-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-bottom: 48px; }
+
+.team-card {
+  background: var(--off-white);
+  border: 1.5px solid var(--border); border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.team-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.team-card.featured { grid-column: 1 / -1; display: flex; gap: 0; }
+
+.team-img {
+  width: 100%; height: 220px; object-fit: cover; display: block;
+  background: linear-gradient(135deg, var(--navy), #2a3080);
+}
+.team-img-placeholder {
+  width: 100%; height: 220px;
+  background: linear-gradient(135deg, var(--navy) 0%, #252b6e 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 800;
+  color: rgba(255,255,255,0.15); letter-spacing: 2px;
+}
+.team-card.featured .team-img-placeholder {
+  width: 240px; height: auto; flex-shrink: 0; border-radius: 0;
+}
+.team-info { padding: 24px 26px; }
+.team-card.featured .team-info { padding: 32px 36px; display: flex; flex-direction: column; justify-content: center; }
+.team-role {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 6px;
+}
+.team-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.team-card.featured .team-name { font-size: 1.7rem; margin-bottom: 12px; }
+.team-bio { font-size: 0.83rem; color: var(--gray-600); line-height: 1.65; }
+
+.team-analysts { margin-top: 8px; }
+.team-analysts-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 20px; }
+.analysts-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+.analyst-chip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px;
+  background: var(--off-white); border: 1.5px solid var(--border); border-radius: 40px;
+  transition: border-color 0.2s;
+}
+.analyst-chip:hover { border-color: var(--green); }
+.analyst-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), var(--navy));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 800; color: #fff;
+}
+.analyst-name { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+.analyst-sub { font-size: 0.7rem; color: var(--gray-400); }
+
+/* ═══════════════════════════════════════
+   DIGITAL VISION
+═══════════════════════════════════════ */
+#vision {
+  background: var(--navy);
+  position: relative; overflow: hidden;
+}
+#vision::before {
+  content: '';
+  position: absolute; bottom: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(45,181,66,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.vision-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+
+.vision-text .sec-title { color: var(--white); }
+.vision-text .sec-sub { color: rgba(255,255,255,0.65); max-width: 100%; }
+
+.vision-body {
+  font-size: 0.92rem; color: rgba(255,255,255,0.65); line-height: 1.85; margin-top: 20px;
+}
+
+.vision-features { display: flex; flex-direction: column; gap: 20px; }
+
+.vision-feat {
+  display: flex; align-items: flex-start; gap: 18px;
+  padding: 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.vision-feat:hover { border-color: rgba(45,181,66,0.3); background: rgba(45,181,66,0.05); }
+
+.vision-feat-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: rgba(45,181,66,0.12);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+}
+.vision-feat-title { font-weight: 700; color: var(--white); margin-bottom: 4px; font-size: 0.92rem; }
+.vision-feat-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+
+/* ═══════════════════════════════════════
+   CTA STRIP
+═══════════════════════════════════════ */
+#cta-strip {
+  background: var(--green);
+  padding: 60px 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 28px;
+}
+.cta-strip-text { color: #fff; }
+.cta-strip-title { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 800; margin-bottom: 8px; }
+.cta-strip-sub { font-size: 0.95rem; opacity: 0.85; }
+.btn-strip {
+  padding: 16px 36px;
+  background: var(--white); color: var(--green);
+  border: none; border-radius: 8px;
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 0.88rem; letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer; text-decoration: none; flex-shrink: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.btn-strip:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer {
+  background: var(--black);
+  padding: 72px 5% 32px;
+}
+
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 56px;
+}
+
+.footer-logo-wrap .nav-brand-name { color: var(--white); font-size: 1.2rem; }
+.footer-logo-wrap .nav-brand-sub { color: rgba(255,255,255,0.3); }
+.footer-tagline-text {
+  font-family: 'Good Vibes', cursive;
+  font-size: 1.3rem; color: var(--green); margin: 8px 0 16px;
+}
+.footer-about-text { font-size: 0.83rem; color: rgba(255,255,255,0.4); line-height: 1.75; max-width: 280px; }
+
+.footer-col h5 {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-col ul li a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-col ul li a:hover { color: var(--white); }
+
+.footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+.footer-contact-icon { color: var(--green); font-size: 0.9rem; margin-top: 2px; flex-shrink: 0; }
+.footer-contact-text { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.55; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+.footer-rc { color: rgba(255,255,255,0.15); }
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════ */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.up { opacity: 1; transform: none; }
+.reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-left.up { opacity: 1; transform: none; }
+.reveal-right { opacity: 0; transform: translateX(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-right.up { opacity: 1; transform: none; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 960px) {
+  .nav-links, .nav-cta { display: none; }
+  .about-inner, .services-header, .calc-inner, .vision-inner { grid-template-columns: 1fr; gap: 40px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .team-lead-grid { grid-template-columns: 1fr; }
+  .team-card.featured { flex-direction: column; }
+  .team-card.featured .team-img-placeholder { width: 100%; height: 200px; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 16px; margin-top: 40px; }
+  .cta-strip { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  section { padding: 64px 5%; }
+  .modal { padding: 32px 24px; }
+  .footer-top { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── WAITLIST MODAL ─── -->
+<div class="modal-overlay" id="waitlistModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalForm">
+      <div class="modal-tag">🎉 Early Access</div>
+      <h2 class="modal-title">Get Early Access to Use our App</h2>
+      <p class="modal-sub">Be among the first Nigerians to access professionally managed investment portfolios from your phone. Reserve your spot — it's free.</p>
+
+      <div class="form-field">
+        <label>Full Name</label>
+        <input type="text" id="wl-name" placeholder="Elijah Adeleke"/>
+      </div>
+      <div class="form-field">
+        <label>Phone Number</label>
+        <input type="tel" id="wl-phone" placeholder="+234 903 988 8312"/>
+      </div>
+      <div class="form-field">
+        <label>Email Address</label>
+        <input type="email" id="wl-email" placeholder="you@example.com"/>
+      </div>
+
+      <div class="form-field">
+        <label>What will you be investing in?</label>
+        <div class="radio-group" id="invest-type-group">
+          <label class="radio-opt"><input type="radio" name="invest" value="Portfolio Management"/> Portfolio Management</label>
+          <label class="radio-opt"><input type="radio" name="invest" value="Savings Plans"/> Savings Plans</label>
+          <label class="radio-opt"><input type="radio" name="invest" value="Financial Planning & Advisory"/> Financial Planning & Advisory</label>
+          <label class="radio-opt"><input type="radio" name="invest" value="Other Investment Opportunities"/> Other Investment Opportunities</label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label>What investment range interests you most?</label>
+        <div class="radio-group" id="invest-range-group">
+          <label class="radio-opt"><input type="radio" name="range" value="Under ₦100,000"/> Under ₦100,000</label>
+          <label class="radio-opt"><input type="radio" name="range" value="₦100,000 – ₦500,000"/> ₦100,000 – ₦500,000</label>
+          <label class="radio-opt"><input type="radio" name="range" value="₦500,000 – ₦1,000,000"/> ₦500,000 – ₦1,000,000</label>
+          <label class="radio-opt"><input type="radio" name="range" value="₦1,000,000+"/> ₦1,000,000+</label>
+        </div>
+      </div>
+
+      <button class="btn-submit-waitlist" onclick="submitWaitlist()">Join the Waitlist →</button>
+      <p class="form-privacy">🔒 Your information is secure and will never be shared.</p>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">You're on the list!</div>
+      <p class="success-sub">Thank you for signing up. We'll reach out as soon as early access opens. Welcome to the Eliad family.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <!-- SVG Logo Recreation -->
+    <svg class="logo-mark" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="46" height="46" rx="9" fill="#2db542"/>
+      <!-- stars -->
+      <circle cx="15" cy="8" r="2" fill="#0d1035"/>
+      <circle cx="23" cy="7" r="2" fill="#0d1035"/>
+      <circle cx="31" cy="8" r="2" fill="#0d1035"/>
+      <!-- tree canopy spokes -->
+      <circle cx="23" cy="22" r="10" fill="#0d1035"/>
+      <line x1="23" y1="12" x2="23" y2="22" stroke="#2db542" stroke-width="1.4"/>
+      <line x1="23" y1="12" x2="15" y2="18" stroke="#2db542" stroke-width="1.4"/>
+      <line x1="23" y1="12" x2="31" y2="18" stroke="#2db542" stroke-width="1.4"/>
+      <line x1="23" y1="22" x2="13" y2="19" stroke="#2db542" stroke-width="1.4"/>
+      <line x1="23" y1="22" x2="33" y2="19" stroke="#2db542" stroke-width="1.4"/>
+      <line x1="23" y1="22" x2="16" y2="27" stroke="#2db542" stroke-width="1.4"/>
+      <line x1="23" y1="22" x2="30" y2="27" stroke="#2db542" stroke-width="1.4"/>
+      <line x1="23" y1="22" x2="23" y2="28" stroke="#2db542" stroke-width="1.4"/>
+      <!-- trunk -->
+      <rect x="21.5" y="28" width="3" height="12" rx="1.5" fill="#0d1035"/>
+    </svg>
+    <div class="nav-brand-text">
+      <span class="nav-brand-name">ELIAD</span>
+      <span class="nav-brand-sub">Investments &amp; Securities</span>
+      <span class="nav-tagline-pill">Earn. Save. Invest.</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#calculator">Returns</a></li>
+    <li><a href="#vision">Our Vision</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal(); return false;">Join Waitlist</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO SLIDER ─── -->
+<section id="hero">
+  <div class="slides-container">
+
+    <!-- SLIDE 1 -->
+    <div class="slide active" id="slide-0">
+      <div class="slide-bg" style="background-image: url('https://images.pexels.com/photos/3943716/pexels-photo-3943716.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Eliad Investments & Securities</div>
+        <h1 class="slide-title">Build Wealth Consistently Without Stress</h1>
+        <p class="slide-sub">Join the waitlist for Eliad Investments' upcoming digital platform — helping Nigerians save smarter, invest confidently, and access professionally managed portfolios.</p>
+        <div class="slide-btns">
+          <a href="#" class="btn-hero-primary" onclick="openModal(); return false;">Reserve Your Spot</a>
+          <a href="mailto:eliadinvestments@gmail.com" class="btn-hero-outline">Contact Us</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide" id="slide-1">
+      <div class="slide-bg" style="background-image: url('https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Portfolio Management</div>
+        <h1 class="slide-title">Grow Your Wealth Strategically</h1>
+        <p class="slide-sub">Our expert team creates personalized investment portfolios designed to deliver up to 25% annual returns, aligned with your financial objectives, while carefully managing risk to protect your capital.</p>
+        <div class="slide-btns">
+          <a href="mailto:eliadinvestments@gmail.com" class="btn-hero-primary">Contact our Advisors</a>
+          <a href="#services" class="btn-hero-outline">Our Services</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide" id="slide-2">
+      <div class="slide-bg" style="background-image: url('https://images.pexels.com/photos/4386366/pexels-photo-4386366.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Locked Savings Plans</div>
+        <h1 class="slide-title">Save, Invest, and Track Your Growth</h1>
+        <p class="slide-sub">Lock your savings for 90–360 days and explore growth opportunities with returns ranging from 6.25% to 25%, designed for disciplined investors.</p>
+        <div class="slide-btns">
+          <a href="mailto:eliadinvestments@gmail.com" class="btn-hero-primary">Contact Us</a>
+          <a href="#calculator" class="btn-hero-outline">Calculate Returns</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div class="slide" id="slide-3">
+      <div class="slide-bg" style="background-image: url('https://images.pexels.com/photos/7172823/pexels-photo-7172823.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Coming Soon</div>
+        <h1 class="slide-title">Be Among the First to Access Our Investment Platform</h1>
+        <p class="slide-sub">Sign up today to get early access to Eliad's upcoming digital app, designed to make saving, investing, and portfolio management simple, secure, and accessible.</p>
+        <div class="slide-btns">
+          <a href="#" class="btn-hero-primary" onclick="openModal(); return false;">Join the Waitlist</a>
+          <a href="#vision" class="btn-hero-outline">Our Vision</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Indicators -->
+  <div class="slide-indicators">
+    <div class="indicator active" onclick="goToSlide(0)"></div>
+    <div class="indicator" onclick="goToSlide(1)"></div>
+    <div class="indicator" onclick="goToSlide(2)"></div>
+    <div class="indicator" onclick="goToSlide(3)"></div>
+  </div>
+
+  <div class="slide-counter">
+    <span id="slideNum">01</span> / 04
+  </div>
+</section>
+
+<!-- ─── EARLY ACCESS BANNER ─── -->
+<section id="early-access">
+  <div class="early-tag reveal">Now Accepting Signups</div>
+  <h2 class="early-title reveal">Get Early Access to Our App</h2>
+  <p class="early-sub reveal">Be the first to experience Eliad's digital investment platform. Join thousands of Nigerians building wealth smarter — before we launch.</p>
+  <button class="btn-waitlist-main reveal" onclick="openModal()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Reserve Your Spot — It's Free
+  </button>
+  <div class="early-numbers reveal">
+    <div class="early-num">
+      <div class="early-num-val">25%</div>
+      <div class="early-num-label">Target Annual Returns</div>
+    </div>
+    <div class="early-num">
+      <div class="early-num-val">4</div>
+      <div class="early-num-label">Investment Products</div>
+    </div>
+    <div class="early-num">
+      <div class="early-num-val">90–360</div>
+      <div class="early-num-label">Day Lock-in Options</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap reveal-left">
+      <div class="about-img-fallback" style="background:linear-gradient(135deg,#1a1e4f 0%,#252b6e 60%,#1e8a2f 100%); align-items:flex-end; padding:32px; font-family:'Playfair Display',serif; font-size:1.8rem; color:rgba(255,255,255,0.9); text-align:left; flex-direction:column; justify-content:flex-end;">
+        <span style="font-family:'Good Vibes',cursive; font-size:3.5rem; color:rgba(255,255,255,0.6); display:block; margin-bottom:12px;">Earn. Save. Invest.</span>
+        <span style="font-size:0.9rem; letter-spacing:3px; text-transform:uppercase; opacity:0.5; font-family:'Syne',sans-serif; font-weight:700;">Eliad Investments</span>
+      </div>
+      <div class="about-badge">
+        <div class="about-badge-num">RC</div>
+        <div class="about-badge-label">7596531</div>
+      </div>
+    </div>
+    <div class="about-text reveal-right">
+      <div class="sec-tag">About the Company</div>
+      <h2 class="sec-title">More Than an <span class="accent">Investment Firm</span></h2>
+      <p>Eliad Investments & Securities is an ever-growing financial services firm committed to empowering Nigerians to achieve their financial goals. With a focus on sustainable wealth creation, we offer a comprehensive range of personalized services — financial advisory, investment portfolio management, fixed returns savings plans, and wealth management.</p>
+      <p>We are more than just an investment firm. We are dedicated to fostering economic empowerment through the democratization of financial knowledge for sustainable wealth creation. Our commitment to equipping individuals with the knowledge and tools to make informed financial decisions is a cornerstone of our mission.</p>
+      <div class="about-commits">
+        <div class="commit-item"><div class="commit-dot"></div>Providing accessible financial solutions through technology</div>
+        <div class="commit-item"><div class="commit-dot"></div>Promoting financial literacy of the public</div>
+        <div class="commit-item"><div class="commit-dot"></div>Professional investment management</div>
+        <div class="commit-item"><div class="commit-dot"></div>Long-term wealth creation for all Nigerians</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="services-header">
+    <div class="reveal-left">
+      <div class="sec-tag">What We Do</div>
+      <h2 class="sec-title">Financial Solutions Designed to <span class="accent">Grow & Protect</span> Your Wealth</h2>
+    </div>
+    <div class="reveal-right" style="text-align:right;">
+      <p class="sec-sub" style="max-width:360px; margin-left:auto;">We provide professional-grade investment services, now being made accessible to every Nigerian through our upcoming digital platform.</p>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon-wrap">📋</div>
+      <div class="service-name">Financial Planning & Advisory (FP&A)</div>
+      <div class="service-return">Personalized</div>
+      <p class="service-desc">Our financial advisors provide personalized guidance that aligns with your unique financial situation and goals. We understand that everyone's financial journey is different, and our approach is tailored to meet your specific needs.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <div class="service-icon-wrap">📊</div>
+      <div class="service-name">Portfolio Management Services (PMS)</div>
+      <div class="service-return">Up to 25% p.a.</div>
+      <p class="service-desc">Our experienced investment managers employ a disciplined approach to portfolio construction, diversification, and ongoing monitoring. We aim for a minimum annual return of 25%, subject to market conditions.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <div class="service-icon-wrap">🔒</div>
+      <div class="service-name">6.25% – 25% Locked Savings Plans</div>
+      <div class="service-return">90 – 360 Days</div>
+      <p class="service-desc">Our flagship investment product delivers targeted and competitive returns on your capital, while employing professional portfolio management strategies to optimize growth and manage risk exposure.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-icon-wrap">🌱</div>
+      <div class="service-name">Investment Opportunities</div>
+      <div class="service-return">Capital Markets</div>
+      <p class="service-desc">Through our digital platform, we bring carefully curated opportunities from the capital markets directly to individuals — helping everyday investors participate in wealth-building strategies that were traditionally out of reach.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RETURNS CALCULATOR ─── -->
+<section id="calculator">
+  <div class="reveal">
+    <div class="sec-tag">Product Test</div>
+    <h2 class="sec-title">Calculate Your <span class="accent">Returns</span></h2>
+    <p class="sec-sub">See how your money can grow with Eliad's investment plans. Adjust the sliders to model your personal scenario.</p>
+  </div>
+  <div class="calc-inner">
+    <div class="calc-box reveal-left">
+      <div class="calc-field">
+        <label>Investment Amount</label>
+        <div class="calc-input-wrap">
+          <span class="calc-currency">₦</span>
+          <input type="number" id="calcAmount" value="500000" min="10000" step="10000" oninput="calcReturns()"/>
+        </div>
+      </div>
+      <div class="calc-field">
+        <label>Amount (Slider)</label>
+        <div class="calc-slider">
+          <input type="range" id="amountSlider" min="10000" max="5000000" step="10000" value="500000" oninput="syncSlider(this.value); calcReturns()"/>
+          <div class="calc-slider-labels"><span>₦10K</span><span>₦5M+</span></div>
+        </div>
+      </div>
+      <div class="calc-field">
+        <label>Investment Plan</label>
+        <div class="plan-tabs" id="planTabs">
+          <button class="plan-tab" onclick="setPlan(6.25, this)">6.25% / yr</button>
+          <button class="plan-tab" onclick="setPlan(10, this)">10% / yr</button>
+          <button class="plan-tab" onclick="setPlan(15, this)">15% / yr</button>
+          <button class="plan-tab active" onclick="setPlan(20, this)">20% / yr</button>
+          <button class="plan-tab" onclick="setPlan(25, this)">25% / yr</button>
+        </div>
+      </div>
+      <div class="calc-field">
+        <label>Lock-In Period</label>
+        <div class="plan-tabs" id="durationTabs">
+          <button class="plan-tab active" onclick="setDuration(90, this)">90 Days</button>
+          <button class="plan-tab" onclick="setDuration(180, this)">180 Days</button>
+          <button class="plan-tab" onclick="setDuration(270, this)">270 Days</button>
+          <button class="plan-tab" onclick="setDuration(360, this)">360 Days</button>
+        </div>
+      </div>
+    </div>
+    <div class="calc-results reveal-right">
+      <div class="calc-res-title">Your Projected Returns</div>
+      <div class="calc-res-item">
+        <div class="calc-res-label">Principal Invested</div>
+        <div class="calc-res-value" id="resPrincipal">₦500,000</div>
+      </div>
+      <div class="calc-divider"></div>
+      <div class="calc-res-item">
+        <div class="calc-res-label">Interest Earned</div>
+        <div class="calc-res-value green" id="resInterest">₦27,397</div>
+      </div>
+      <div class="calc-res-item">
+        <div class="calc-res-label">Total at Maturity</div>
+        <div class="calc-res-value" id="resTotal">₦527,397</div>
+      </div>
+      <div class="calc-divider"></div>
+      <div class="calc-res-item">
+        <div class="calc-res-label">Annualized Rate</div>
+        <div class="calc-res-value green" id="resRate">20% p.a.</div>
+      </div>
+      <button class="btn-submit-waitlist" onclick="openModal()" style="margin-top:8px;">Start Earning — Join Waitlist</button>
+      <p class="calc-disclaimer">*Returns are projected and subject to market conditions. Past performance does not guarantee future results. Capital is at risk.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TEAM ─── -->
+<section id="team">
+  <div class="team-header-row">
+    <div class="reveal">
+      <div class="sec-tag">Our Leadership</div>
+      <h2 class="sec-title">The Team Behind <span class="accent">Eliad</span></h2>
+    </div>
+    <p class="sec-sub reveal" style="max-width:380px; text-align:right;">Led by professionals committed to integrity, financial discipline, and long-term value creation.</p>
+  </div>
+
+  <div class="team-lead-grid">
+    <!-- Featured: Founder -->
+    <div class="team-card featured reveal">
+      <div class="team-img-placeholder">EA</div>
+      <div class="team-info">
+        <div class="team-role">Founder / Executive Director</div>
+        <div class="team-name">Elijah A. Adeleke</div>
+        <p class="team-bio">Elijah Adeleke founded Eliad Investments with the vision of helping individuals build sustainable wealth through structured financial systems and accessible investment opportunities. His leadership drives the firm's commitment to democratizing wealth creation for every Nigerian.</p>
+      </div>
+    </div>
+
+    <!-- Other leadership -->
+    <div class="team-card reveal">
+      <div class="team-img-placeholder">FO</div>
+      <div class="team-info">
+        <div class="team-role">Technology Advisor</div>
+        <div class="team-name">Feranmi Oloyede</div>
+        <p class="team-bio">Leading the digital transformation of Eliad's investment services, building the infrastructure that will power our upcoming app.</p>
+      </div>
+    </div>
+
+    <div class="team-card reveal">
+      <div class="team-img-placeholder">AF</div>
+      <div class="team-info">
+        <div class="team-role">Risk & Compliance Officer</div>
+        <div class="team-name">Abdulquadri Fasasi</div>
+        <p class="team-bio">Ensuring every investment product and client engagement meets the highest standards of regulatory compliance and risk management.</p>
+      </div>
+    </div>
+
+    <div class="team-card reveal">
+      <div class="team-img-placeholder">AA</div>
+      <div class="team-info">
+        <div class="team-role">Risk & Compliance Officer</div>
+        <div class="team-name">Abdurrahman Abdulhakkeem</div>
+        <p class="team-bio">Protecting client capital through disciplined risk assessment frameworks and robust compliance monitoring systems.</p>
+      </div>
+    </div>
+
+    <div class="team-card reveal">
+      <div class="team-img-placeholder">AA</div>
+      <div class="team-info">
+        <div class="team-role">Digital Communications Officer</div>
+        <div class="team-name">Abdulquadri AbdulSalam</div>
+        <p class="team-bio">Shaping Eliad's digital presence and ensuring clear, compelling communication with clients across all platforms.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-analysts reveal">
+    <div class="team-analysts-title">Our Team of Analysts</div>
+    <div class="analysts-grid">
+      <div class="analyst-chip">
+        <div class="analyst-avatar">AC</div>
+        <div><div class="analyst-name">Anne-Claire Omolade</div><div class="analyst-sub">Analyst</div></div>
+      </div>
+      <div class="analyst-chip">
+        <div class="analyst-avatar">CO</div>
+        <div><div class="analyst-name">Chisom Okey-Nwamba</div><div class="analyst-sub">Analyst</div></div>
+      </div>
+      <div class="analyst-chip">
+        <div class="analyst-avatar">DJ</div>
+        <div><div class="analyst-name">Daniel James</div><div class="analyst-sub">Analyst</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DIGITAL VISION ─── -->
+<section id="vision">
+  <div class="vision-inner">
+    <div class="vision-text reveal-left">
+      <div class="sec-tag">The Future We Are Building</div>
+      <h2 class="sec-title" style="color:#fff;">Our Vision for <span class="accent">Digital Investing</span></h2>
+      <p class="vision-body">At Eliad Investments, we envision a future where accessing investment opportunities and growing wealth is simple, transparent, and inclusive. Our upcoming digital platform will empower everyday investors to save strategically, invest confidently, and participate in professionally managed portfolios — all from their mobile devices.</p>
+      <p class="vision-body" style="margin-top:16px;">By combining technology with financial expertise, we aim to break down barriers to the capital markets and bring structured investment solutions within reach of everyone.</p>
+      <button class="btn-waitlist-main" onclick="openModal()" style="margin-top:32px; display:inline-flex;">
+        Get Early Access →
+      </button>
+    </div>
+    <div class="vision-features reveal-right">
+      <div class="vision-feat">
+        <div class="vision-feat-icon">📱</div>
+        <div>
+          <div class="vision-feat-title">Mobile-First Platform</div>
+          <div class="vision-feat-desc">Manage your portfolio, track returns, and make investment decisions right from your phone — anytime, anywhere.</div>
+        </div>
+      </div>
+      <div class="vision-feat">
+        <div class="vision-feat-icon">📈</div>
+        <div>
+          <div class="vision-feat-title">Real-Time Portfolio Tracking</div>
+          <div class="vision-feat-desc">Watch your investments grow with live performance dashboards and transparent reporting on every naira working for you.</div>
+        </div>
+      </div>
+      <div class="vision-feat">
+        <div class="vision-feat-icon">🛡️</div>
+        <div>
+          <div class="vision-feat-title">Risk-Aware Investing</div>
+          <div class="vision-feat-desc">Our platform emphasizes responsible investing and financial discipline — empowering you to make informed decisions.</div>
+        </div>
+      </div>
+      <div class="vision-feat">
+        <div class="vision-feat-icon">🎓</div>
+        <div>
+          <div class="vision-feat-title">Built-In Financial Literacy</div>
+          <div class="vision-feat-desc">Learn the principles of disciplined saving and investing — creating not just growth potential, but financially-savvy investors.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA STRIP ─── -->
+<div id="cta-strip">
+  <div class="cta-strip-text">
+    <div class="cta-strip-title">Ready to start building wealth?</div>
+    <div class="cta-strip-sub">Join the waitlist today — your spot is free and your future is waiting.</div>
+  </div>
+  <a href="#" class="btn-strip" onclick="openModal(); return false;">Join the Waitlist</a>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo-wrap nav-logo" style="display:flex; align-items:center; gap:10px; text-decoration:none; margin-bottom:4px;">
+        <svg class="logo-mark" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="46" height="46" rx="9" fill="#2db542"/>
+          <circle cx="15" cy="8" r="2" fill="#0d1035"/>
+          <circle cx="23" cy="7" r="2" fill="#0d1035"/>
+          <circle cx="31" cy="8" r="2" fill="#0d1035"/>
+          <circle cx="23" cy="22" r="10" fill="#0d1035"/>
+          <line x1="23" y1="12" x2="23" y2="22" stroke="#2db542" stroke-width="1.4"/>
+          <line x1="23" y1="12" x2="15" y2="18" stroke="#2db542" stroke-width="1.4"/>
+          <line x1="23" y1="12" x2="31" y2="18" stroke="#2db542" stroke-width="1.4"/>
+          <line x1="23" y1="22" x2="13" y2="19" stroke="#2db542" stroke-width="1.4"/>
+          <line x1="23" y1="22" x2="33" y2="19" stroke="#2db542" stroke-width="1.4"/>
+          <line x1="23" y1="22" x2="16" y2="27" stroke="#2db542" stroke-width="1.4"/>
+          <line x1="23" y1="22" x2="30" y2="27" stroke="#2db542" stroke-width="1.4"/>
+          <line x1="23" y1="22" x2="23" y2="28" stroke="#2db542" stroke-width="1.4"/>
+          <rect x="21.5" y="28" width="3" height="12" rx="1.5" fill="#0d1035"/>
+        </svg>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name" style="color:#fff;">ELIAD</span>
+          <span class="nav-brand-sub">Investments &amp; Securities</span>
+        </div>
+      </div>
+      <div class="footer-tagline-text">Earn. Save. Invest.</div>
+      <p class="footer-about-text">An ever-growing financial services firm committed to empowering Nigerians to achieve their financial goals through sustainable wealth creation and technology.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#vision">Our Vision</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Products</h5>
+      <ul>
+        <li><a href="#services">Portfolio Management</a></li>
+        <li><a href="#services">Savings Plans</a></li>
+        <li><a href="#services">FP&A Services</a></li>
+        <li><a href="#services">Investment Opportunities</a></li>
+        <li><a href="#calculator">Returns Calculator</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">📍</span>
+        <span class="footer-contact-text">B18, Obasanjo Close, Staklin Estate, Abere-Ede, Osun State, Nigeria.</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">📞</span>
+        <span class="footer-contact-text">+234 (903) 988 8312</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">✉️</span>
+        <span class="footer-contact-text">eliadinvestments@gmail.com</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Eliad Investments &amp; Securities. All rights reserved. <span class="footer-rc">RC: 7596531</span></p>
+    <p>Osun State, Nigeria &nbsp;·&nbsp; <a href="mailto:eliadinvestments@gmail.com" style="color:rgba(255,255,255,0.25); text-decoration:none;">eliadinvestments@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+/* ─── HERO SLIDER ─── */
+let currentSlide = 0;
+const totalSlides = 4;
+let autoSlide;
+
+function goToSlide(n) {
+  document.getElementById('slide-' + currentSlide).classList.remove('active');
+  document.querySelectorAll('.indicator')[currentSlide].classList.remove('active');
+  currentSlide = n;
+  document.getElementById('slide-' + currentSlide).classList.add('active');
+  document.querySelectorAll('.indicator')[currentSlide].classList.add('active');
+  document.getElementById('slideNum').textContent = String(currentSlide + 1).padStart(2, '0');
+  resetAutoSlide();
+}
+
+function resetAutoSlide() {
+  clearInterval(autoSlide);
+  autoSlide = setInterval(() => goToSlide((currentSlide + 1) % totalSlides), 6000);
+}
+
+autoSlide = setInterval(() => goToSlide((currentSlide + 1) % totalSlides), 6000);
+
+/* ─── MODAL ─── */
+function openModal() {
+  document.getElementById('waitlistModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('waitlistModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('waitlistModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function submitWaitlist() {
+  const name = document.getElementById('wl-name').value.trim();
+  const phone = document.getElementById('wl-phone').value.trim();
+  const email = document.getElementById('wl-email').value.trim();
+  if (!name || !email) { alert('Please enter your name and email to continue.'); return; }
+  document.getElementById('modalForm').style.display = 'none';
+  document.getElementById('modalSuccess').style.display = 'block';
+  setTimeout(closeModal, 3800);
+  document.getElementById('modalForm').style.display = '';
+  document.getElementById('modalSuccess').style.display = 'none';
+  document.getElementById('wl-name').value = '';
+  document.getElementById('wl-phone').value = '';
+  document.getElementById('wl-email').value = '';
+}
+// actually show success
+function submitWaitlist() {
+  const name = document.getElementById('wl-name').value.trim();
+  const email = document.getElementById('wl-email').value.trim();
+  if (!name || !email) { alert('Please enter your name and email to continue.'); return; }
+  document.getElementById('modalForm').style.display = 'none';
+  document.getElementById('modalSuccess').style.display = 'block';
+  setTimeout(() => {
+    closeModal();
+    setTimeout(() => {
+      document.getElementById('modalForm').style.display = '';
+      document.getElementById('modalSuccess').style.display = 'none';
+      document.getElementById('wl-name').value = '';
+      document.getElementById('wl-phone').value = '';
+      document.getElementById('wl-email').value = '';
+    }, 400);
+  }, 3000);
+}
+
+/* Radio opt highlight */
+document.querySelectorAll('.radio-opt input').forEach(r => {
+  r.addEventListener('change', () => {
+    document.querySelectorAll('.radio-opt').forEach(o => {
+      if (o.querySelector('input').name === r.name) o.classList.remove('selected');
+    });
+    r.parentElement.classList.add('selected');
+  });
+});
+
+/* ─── CALCULATOR ─── */
+let calcRate = 20;
+let calcDuration = 90;
+
+function setPlan(rate, btn) {
+  calcRate = rate;
+  document.querySelectorAll('#planTabs .plan-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  calcReturns();
+}
+function setDuration(days, btn) {
+  calcDuration = days;
+  document.querySelectorAll('#durationTabs .plan-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  calcReturns();
+}
+function syncSlider(val) {
+  document.getElementById('calcAmount').value = val;
+}
+document.getElementById('calcAmount').addEventListener('input', function() {
+  document.getElementById('amountSlider').value = this.value;
+  calcReturns();
+});
+
+function fmt(n) {
+  return '₦' + Math.round(n).toLocaleString('en-NG');
+}
+
+function calcReturns() {
+  const principal = parseFloat(document.getElementById('calcAmount').value) || 0;
+  const interest = principal * (calcRate / 100) * (calcDuration / 365);
+  const total = principal + interest;
+  document.getElementById('resPrincipal').textContent = fmt(principal);
+  document.getElementById('resInterest').textContent = fmt(interest);
+  document.getElementById('resTotal').textContent = fmt(total);
+  document.getElementById('resRate').textContent = calcRate + '% p.a.';
+}
+calcReturns();
+
+/* ─── NAVBAR ─── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ─── SCROLL REVEAL ─── */
+const revealAll = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('up'), i * 70);
+    }
+  });
+}, { threshold: 0.08 });
+revealAll.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
